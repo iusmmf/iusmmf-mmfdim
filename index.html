@@ -213,13 +213,13 @@
                 
         .dateselect {
             margin: 0 auto;
+            text-align: right;
         }
                 
         .datecat {
             padding-top: 2px;
             margin-right: 3px;
             font-size: 12px;
-            text-align: right;
         }
         
         .dates input[type="radio"] {
@@ -335,9 +335,7 @@
             
             #filters {
                 bottom: 20px;
-                left: 0px;
-                right: 0px;
-                margin: auto;
+                margin: 0px auto;
             }
         
             .showdates:hover {
@@ -348,6 +346,24 @@
             .hidedates:hover {
                 background: none;
                 color: #000;
+            }
+        }
+        
+        @media screen and (max-width:320px) {
+            
+            .header-mobile {
+                display: block;
+                float:left;
+                margin: 12px 0px 12px 20px;
+                font: 16px 'Yu Gothic', Arial, Helvetica, sans-serif;
+                font-weight: 900;
+            }
+            
+            #filters {
+                bottom: 20px;
+                width: 300px;
+                padding: 15px 5px 15px 5px;
+                margin: 0px auto;
             }
         }
       
@@ -490,13 +506,13 @@
 
             </div>
 
-            <!-- IMPORTANT: Enter new <tr> rows of "dateselect" table to add date sselection for new datasets -->
+            <!-- IMPORTANT: Enter new <tr> rows of "dateselect" table from the bottom to add date sselection for new datasets -->
             
             <div class="dates">
                 <form id="dates">
                     <table class="dateselect">
                         <tr>
-                            <td>
+                            <td colspan="4">
                                 <div class="datecat">新型コロナ流行前: 2019/10/1 - 31</div>
                             </td>
                             <td>
@@ -509,7 +525,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="4">
                                 <div class="datecat">緊急事態宣言中: 2020/4/16 - 5/25</div>
                             </td>
                             <td>
@@ -521,10 +537,11 @@
                                 <label for="soeWE">休日</label>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="datecat">2020/6/15 - 7/14</div>
-                            </td>
+                        <tr class="datecat">
+                            <td width="130px">2020/</td>
+                            <td>6/15</td>
+                            <td>-</td>
+                            <td><div class="datecat">7/14</div></td>
                             <td>
                                 <input id="202067WD" value="202067WD" name="button" type="radio">
                                 <label for="202067WD">平日</label>
@@ -532,6 +549,20 @@
                             <td>
                                 <input id="202067WE" value="202067WE" name="button" type="radio">
                                 <label for="202067WE">休日</label>
+                            </td>
+                        </tr>
+						<tr class="datecat">
+                            <td width="130px">2020/</td> <!-- Change year -->
+                            <td>10/1</td> <!--Change start date -->
+                            <td>-</td>
+                            <td><div class="datecat">10/31</div></td> <!--Change end date -->
+                            <td>
+                                <input id="202010WD" value="202010WD" name="button" type="radio">
+                                <label for="202010WD">平日</label>
+                            </td>
+                            <td>
+                                <input id="202010WE" value="202010WE" name="button" type="radio">
+                                <label for="202010WE">休日</label>
                             </td>
                         </tr>
                     </table>
@@ -605,7 +636,7 @@
 
             /*
             Load data sources and layers for map
-            IMPORTANT: Add a new source and layer for each new dataset
+            IMPORTANT: Add a new set of dataset name, Tileset ID in URL format, and Tileset name, for each new dataset
             */
 
             map.on('load', function() {
@@ -627,143 +658,45 @@
                             40000, '#85092E',
                         ]
                 
-                map.addSource('201910WD', {
-                    type: 'vector',
-                    url: 'mapbox://nyamato.7mq6iyd4',
-                })
-                map.addLayer({
-                    id: '201910WD',
-                    type: 'fill-extrusion',
-                    source: '201910WD',
-                    'source-layer': '201910WD-7aqr67',
-                    paint: {
-                        'fill-extrusion-color': colorScale,
-                        'fill-extrusion-height': [
-                            '*',
-                            ['get', 'Population'],
-                            0.15
-                        ], 
-                    },
-                    filter: ['==', ['number', ['get', 'Time']], 1200],
-                    layout: {
-                        visibility: 'visible',
+                var sourcelayer = [
+                    ['201910WD', 'mapbox://nyamato.7mq6iyd4', '201910WD-7aqr67'],
+                    ['201910WE', 'mapbox://nyamato.9p8qynq6', '201910WE-64bxg8'],
+                    ['soeWD', 'mapbox://nyamato.d091zt9g', 'soeWD-3023ff'],
+                    ['soeWE', 'mapbox://nyamato.5ce1o3te', 'soeWE-9b30ck'],
+                    ['202067WD', 'mapbox://nyamato.6d261hgn', '202067WD-2eo1m5'],
+                    ['202067WE', 'mapbox://nyamato.1jvhckwd', '202067WE-5b8bb1'],
+                    ['202010WD', 'mapbox://nyamato.dfy6k7nt', '202010WD-5avomy'],
+                    ['202010WE', 'mapbox://nyamato.0ykx0fbs', '202010WE-206244'],
+                ]
+                
+                function addsourcelayer(data) {
+                    for(var i = 0; i < data.length; i++){
+                        map.addSource(data[i][0], {
+                        type: 'vector',
+                        url: data[i][1],
+                        })
+                        map.addLayer({
+                            id: data[i][0],
+                            type: 'fill-extrusion',
+                            source: data[i][0],
+                            'source-layer': data[i][2],
+                            paint: {
+                                'fill-extrusion-color': colorScale,
+                                'fill-extrusion-height': [
+                                    '*',
+                                    ['get', 'Population'],
+                                    0.15
+                                ], 
+                            },
+                            filter: ['==', ['number', ['get', 'Time']], 1200],
+                            layout: {
+                                visibility: 'visible',
+                            }
+                        })
                     }
-                })
-
-                map.addSource('201910WE', {
-                    type: 'vector',
-                    url: 'mapbox://nyamato.9p8qynq6',
-                })
-                map.addLayer({
-                    id: '201910WE',
-                    type: 'fill-extrusion',
-                    source: '201910WE',
-                    'source-layer': '201910WE-64bxg8',
-                    paint: {
-                        'fill-extrusion-color': colorScale,
-                        'fill-extrusion-height': [
-                            '*',
-                            ['get', 'Population'],
-                            0.15
-                        ], 
-                    },
-                    filter: ['==', ['number', ['get', 'Time']], 1200],
-                    layout: {
-                        visibility: 'none',
-                    }
-                })
-
-                map.addSource('soeWD', {
-                    type: 'vector',
-                    url: 'mapbox://nyamato.d091zt9g',
-                })
-                map.addLayer({
-                    id: 'soeWD',
-                    type: 'fill-extrusion',
-                    source: 'soeWD',
-                    'source-layer': 'soeWD-3023ff',
-                    paint: {
-                        'fill-extrusion-color': colorScale,
-                        'fill-extrusion-height': [
-                            '*',
-                            ['get', 'Population'],
-                            0.15
-                        ], 
-                    },
-                    filter: ['==', ['number', ['get', 'Time']], 1200],
-                    layout: {
-                        visibility: 'none',
-                    }
-                })
-
-                map.addSource('soeWE', {
-                    type: 'vector',
-                    url: 'mapbox://nyamato.5ce1o3te',
-                })
-                map.addLayer({
-                    id: 'soeWE',
-                    type: 'fill-extrusion',
-                    source: 'soeWE',
-                    'source-layer': 'soeWE-9b30ck',
-                    paint: {
-                        'fill-extrusion-color': colorScale,
-                        'fill-extrusion-height': [
-                            '*',
-                            ['get', 'Population'],
-                            0.15
-                        ], 
-                    },
-                    filter: ['==', ['number', ['get', 'Time']], 1200],
-                    layout: {
-                        visibility: 'none',
-                    }
-                })
-
-                map.addSource('202067WD', {
-                    type: 'vector',
-                    url: 'mapbox://nyamato.6d261hgn',
-                })
-                map.addLayer({
-                    id: '202067WD',
-                    type: 'fill-extrusion',
-                    source: '202067WD',
-                    'source-layer': '202067WD-2eo1m5',
-                    paint: {
-                        'fill-extrusion-color': colorScale,
-                        'fill-extrusion-height': [
-                            '*',
-                            ['get', 'Population'],
-                            0.15
-                        ], 
-                    },
-                    filter: ['==', ['number', ['get', 'Time']], 1200],
-                    layout: {
-                        visibility: 'none',
-                    }
-                })
-
-                map.addSource('202067WE', {
-                    type: 'vector',
-                    url: 'mapbox://nyamato.1jvhckwd',
-                })
-                map.addLayer({
-                    id: '202067WE',
-                    type: 'fill-extrusion',
-                    source: '202067WE',
-                    'source-layer': '202067WE-5b8bb1',
-                    paint: {
-                        'fill-extrusion-color': colorScale,
-                        'fill-extrusion-height': [
-                            '*',
-                            ['get', 'Population'],
-                            0.15
-                        ], 
-                    },
-                    filter: ['==', ['number', ['get', 'Time']], 1200],
-                    layout: {
-                        visibility: 'none',
-                    }
-                })
+                }
+                
+                addsourcelayer(sourcelayer)
                 
                 // Loads map based on value of time slider
                 
@@ -811,12 +744,14 @@
                 document.getElementById('dates').addEventListener('change', function(e) {
                     var date = e.target.value
                     var layers = [
-                    '201910WD',
-                    '201910WE',
-                    'soeWD',
-                    'soeWE',
-                    '202067WD',
-                    '202067WE',
+						'201910WD',
+						'201910WE',
+						'soeWD',
+						'soeWE',
+						'202067WD',
+						'202067WE',
+						'202010WD',
+						'202010WE',
                     ]
                     for (var i = 0; i < layers.length; i++) {
                         var layer = layers[i]
