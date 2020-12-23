@@ -304,29 +304,37 @@
                 position: absolute;
                 top: 0px;
                 left: 0px;
-                height: 50px;
+                height: 70px;
                 width: 100%;
                 background: rgba(255,255,255,0.95);
                 border-bottom: 1px solid #b2b2b2;
             }
             
-            .header-mobile {
-                display: block;
+            .header-mobile-container {
+                display: table;
                 float:left;
-                margin: 12px 0px 12px 20px;
+                margin: 0px 0px 0px 20px;
+                height: 100%;
                 font: 18px 'Yu Gothic', Arial, Helvetica, sans-serif;
+                line-height: 20px;
                 font-weight: 900;
+            }
+            
+            .header-mobile {
+                display: table-cell;
+                vertical-align: middle;
             }
             
             .language-mobile {
                 display: block;
                 float: right;
-                margin: 12px 20px 0px 0px;
-                width: 50px;
+                margin: 20px 20px 0px 0px;
+                width: 60px;
+                height: 24px;
                 background: rgba(255,255,255,0.9);
-                padding: 2px 5px;
                 border: 1px solid #cdcdcd;
                 font: 12px 'Yu Gothic', Arial, Helvetica, sans-serif;
+                line-height: 24px;
                 text-align: center;
                 transition: 0.4s;
             }
@@ -341,13 +349,14 @@
             .legendbutton {
                 display: block;
                 float: right;
-                width: 50px;
+                width: 60px;
+                height: 24px;
                 background: rgba(255,255,255,0.7);
-                padding: 2px 5px;
                 border: 1px solid #cdcdcd;
-                margin: 12px 10px 0px 0px;
+                margin: 20px 10px 0px 0px;
                 color: #000;
                 font: 12px 'Yu Gothic', Arial, Helvetica, sans-serif;
+                line-height: 24px;
                 text-align: center;
             }
             
@@ -419,7 +428,8 @@
         <!-- Only in mobile view: top bar and color legend -->
 
         <div id="topbar">
-            <div class="header-mobile">東京 23 区全体の時間帯別人数</div>
+            <div class="header-mobile-container"><div class="header-mobile">東京 23 区全体の時間帯別人数</div>
+            </div>
             <div class="language-mobile" onclick="toggleLan(this)">English</div>
             <div class="legendbutton">凡例</div>
         </div>
@@ -501,7 +511,7 @@
             var subheader = document.getElementsByClassName("subheader")
             $(subheader).html($(subheader).html() == 'Population' ? '人数' : 'Population')
             var headerm = document.getElementsByClassName("header-mobile")
-            $(headerm).html($(headerm).html() == 'Population by Time in Tokyo 23 Wards' ? '東京 23 区全体の時間帯別人数' : 'Population by Time in Tokyo 23 Wards')
+            $(headerm).html($(headerm).html() == 'Population by Time<br>in Tokyo 23 Wards' ? '東京 23 区全体の時間帯別人数' : 'Population by Time<br>in Tokyo 23 Wards')
             var legendm = document.getElementsByClassName("legendbutton")
             $(legendm).html($(legendm).html() == 'Legend' ? '凡例' : 'Legend')
             var datecat1 = document.getElementsByClassName("datecat")[0]
