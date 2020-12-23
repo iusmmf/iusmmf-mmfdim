@@ -535,9 +535,9 @@
             } else if (showdates.innerHTML.indexOf('Select time filters') !== -1) {
                 $(showdates).html('+<br>日付を選択')
             } else if (showdates.innerHTML.indexOf('閉じる') !== -1) {
-                $(showdates).html('+<br>Close')
+                $(showdates).html('×<br>Close')
             } else if (showdates.innerHTML.indexOf('Close') !== -1) {
-                $(showdates).html('+<br>閉じる')
+                $(showdates).html('×<br>閉じる')
             }
 
         }
@@ -687,9 +687,9 @@
                     } else if (td.innerHTML.indexOf('Select time filters') !== -1) {
                         $(td).html($(td).html() == '×<br>Close' ? '+<br>Select time filters' : '×<br>Close')
                     } else if (td.innerHTML.indexOf('閉じる') !== -1) {
-                        $(td).html($(td).html() == '×<br>日付を選択' ? '+<br>閉じる' : '×<br>日付を選択')
+                        $(td).html($(td).html() == '+<br>日付を選択' ? '×<br>閉じる' : '+<br>日付を選択')
                     } else if (td.innerHTML.indexOf('Close') !== -1) {
-                        $(td).html($(td).html() == '×<br>Select time filters' ? '+<br>Close' : '×<br>Select time filters')
+                        $(td).html($(td).html() == '+<br>Select time filters' ? '×<br>Close' : '+<br>Select time filters')
                     }
                 }
             
