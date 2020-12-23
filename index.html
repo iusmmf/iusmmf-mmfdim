@@ -514,6 +514,8 @@
             $(headerm).html($(headerm).html() == 'Population by Time<br>in Tokyo 23 Wards' ? '東京 23 区全体の時間帯別人数' : 'Population by Time<br>in Tokyo 23 Wards')
             var legendm = document.getElementsByClassName("legendbutton")
             $(legendm).html($(legendm).html() == 'Legend' ? '凡例' : 'Legend')
+            var subheaderm = document.getElementsByClassName("subheader-mobile")
+            $(subheaderm).html($(subheaderm).html() == 'Population' ? '人数' : 'Population')
             var datecat1 = document.getElementsByClassName("datecat")[0]
             $(datecat1).html($(datecat1).html() == 'Before COVID-19: 2019/10/1 - 31' ? '新型コロナ流行前: 2019/10/1 - 31' : 'Before COVID-19: 2019/10/1 - 31')
             var datecat2 = document.getElementsByClassName("datecat")[1]
