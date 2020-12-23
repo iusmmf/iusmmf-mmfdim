@@ -23,9 +23,30 @@
             width: 100%;
         }
 
-        #info {
+        .language {
             position: absolute;
             top: 40px;
+            left: 40px;
+            width: 65px;
+            background: rgba(255,255,255,0.9);
+            padding: 5px;
+            border: 1px solid #b2b2b2;
+            font: 13px 'Yu Gothic', Arial, Helvetica, sans-serif;
+            font-weight: 700;
+            text-align: center;
+            transition: 0.5s;
+        }
+        
+        .language:hover {
+            background: rgba(0,153,153,0.1);
+            border: 1px solid #009999;
+            color: #009999;
+            transition: 0.3s;
+        }
+        
+        #info {
+            position: absolute;
+            top: 75px;
             left: 40px;
             width: 202px;
             background: rgba(255,255,255,0.9);
@@ -78,7 +99,7 @@
             position: absolute;
             bottom: 50px;
             left: 40px;
-            width: 310px;
+            width: 320px;
             background: rgba(255,255,255,0.9);
             padding: 15px;
             border: 1px solid #b2b2b2;
@@ -175,7 +196,7 @@
             text-align: center;
         }
         
-        .showdates {
+        #showdates {
             width: 290px;
             cursor: pointer;
             padding: 2px;
@@ -184,7 +205,7 @@
             transition: 0.5s;
         }
         
-        .showdates:hover {
+        #showdates:hover {
             background: rgba(0,153,153,0.1);
             color: #009999;
             transition: 0.5s;
@@ -297,20 +318,40 @@
                 font-weight: 900;
             }
             
-            .topbarbutton {
+            .language-mobile {
                 display: block;
                 float: right;
-                width: 30px;
+                margin: 12px 20px 0px 0px;
+                width: 50px;
+                background: rgba(255,255,255,0.9);
+                padding: 2px 5px;
+                border: 1px solid #cdcdcd;
+                font: 12px 'Yu Gothic', Arial, Helvetica, sans-serif;
+                text-align: center;
+                transition: 0.4s;
+            }
+
+            .language-mobile:focus {
+                background: rgba(0,153,153,0.1);
+                border: 1px solid #009999;
+                color: #009999;
+                transition: 0.2s;
+            }
+            
+            .legendbutton {
+                display: block;
+                float: right;
+                width: 50px;
                 background: rgba(255,255,255,0.7);
                 padding: 2px 5px;
                 border: 1px solid #cdcdcd;
-                margin: 12px 20px 0px 0px;
+                margin: 12px 10px 0px 0px;
                 color: #000;
                 font: 12px 'Yu Gothic', Arial, Helvetica, sans-serif;
                 text-align: center;
             }
             
-            #info {
+            #info, .language {
                 display: none;
             }
             
@@ -338,7 +379,7 @@
                 margin: 0px auto;
             }
         
-            .showdates:hover {
+            #showdates:hover {
                 background: none;
                 color: #b2b2b2;
             }
@@ -379,7 +420,8 @@
 
         <div id="topbar">
             <div class="header-mobile">東京 23 区全体の時間帯別人数</div>
-            <div class="topbarbutton">凡例</div>
+            <div class="language-mobile" onclick="toggleLan(this)">English</div>
+            <div class="legendbutton">凡例</div>
         </div>
 
         <div class="info-mobile">
@@ -421,10 +463,10 @@
         <!-- Show/hide legend in mobile view -->
         
         <script>
-            $(".topbarbutton").click(function(){
+            $(".legendbutton").click(function(){
               $(".info-mobile").toggle();
                 if($(".info-mobile").is(":visible")){
-                    $(".topbarbutton").css({
+                    $(".legendbutton").css({
                         "background": "#CBE9EA",
                         "color": "#009999",
                         "font-weight": "800",
@@ -432,7 +474,7 @@
                     })
                 }
                 else{
-                    $(".topbarbutton").css({
+                    $(".legendbutton").css({
                         "background": "rgba(255,255,255,0.7)",
                         "color": "#666",
                         "font-weight": "normal",
@@ -446,6 +488,45 @@
         
         <!-- Title and color legend -->
 
+        <div class="language" onclick="toggleLan(this)">English</div>
+    
+        <script>
+            
+        /* Toggle language between JP/EN */
+            
+        function toggleLan(lan) {
+            $(lan).html($(lan).html() == '日本語' ? 'English' : '日本語')
+            var header = document.getElementsByClassName("header")
+            $(header).html($(header).html() == 'Population by Time in Tokyo 23 Wards' ? '東京 23 区全体の<br>時間帯別人数' : 'Population by Time in Tokyo 23 Wards')
+            var subheader = document.getElementsByClassName("subheader")
+            $(subheader).html($(subheader).html() == 'Population' ? '人数' : 'Population')
+            var headerm = document.getElementsByClassName("header-mobile")
+            $(headerm).html($(headerm).html() == 'Population by Time in Tokyo 23 Wards' ? '東京 23 区全体の時間帯別人数' : 'Population by Time in Tokyo 23 Wards')
+            var legendm = document.getElementsByClassName("legendbutton")
+            $(legendm).html($(legendm).html() == 'Legend' ? '凡例' : 'Legend')
+            var datecat1 = document.getElementsByClassName("datecat")[0]
+            $(datecat1).html($(datecat1).html() == 'Before COVID-19: 2019/10/1 - 31' ? '新型コロナ流行前: 2019/10/1 - 31' : 'Before COVID-19: 2019/10/1 - 31')
+            var datecat2 = document.getElementsByClassName("datecat")[1]
+            $(datecat2).html($(datecat2).html() == 'State of emergency: 2020/4/16 - 5/25' ? '緊急事態宣言中: 2020/4/16 - 5/25' : 'State of emergency: 2020/4/16 - 5/25')
+            var WD = document.getElementsByClassName("WD")
+            $(WD).html($(WD).html() == 'M-F' ? '平日' : 'M-F')
+            var WE = document.getElementsByClassName("WE")
+            $(WE).html($(WE).html() == 'S-S' ? '休日' : 'S-S')
+            var showdates = document.getElementById("showdates")
+            if (showdates.innerHTML.indexOf('日付を選択') !== -1) {
+                $(showdates).html('+<br>Select time filters')
+            } else if (showdates.innerHTML.indexOf('Select time filters') !== -1) {
+                $(showdates).html('+<br>日付を選択')
+            } else if (showdates.innerHTML.indexOf('閉じる') !== -1) {
+                $(showdates).html('+<br>Close')
+            } else if (showdates.innerHTML.indexOf('Close') !== -1) {
+                $(showdates).html('+<br>閉じる')
+            }
+
+        }
+        
+        </script>
+        
         <div id="info">
 
             <div class="header">東京 23 区全体の<br>時間帯別人数</div>
@@ -506,7 +587,7 @@
 
             </div>
 
-            <!-- IMPORTANT: Enter new <tr> rows of "dateselect" table from the bottom to add date sselection for new datasets -->
+            <!-- IMPORTANT: Enter new <tr> rows of "dateselect" table from the bottom to add date selection for new datasets -->
             
             <div class="dates">
                 <form id="dates">
@@ -516,12 +597,12 @@
                                 <div class="datecat">新型コロナ流行前: 2019/10/1 - 31</div>
                             </td>
                             <td>
-                                <input id="201910WD" value="201910WD" name="button"  type="radio">
-                                <label for="201910WD">平日</label>
+                                <input id="201910WD" value="201910WD" name="button" type="radio">
+                                <label for="201910WD" class="WD">平日</label>
                             </td>
                             <td>
                                 <input id="201910WE" value="201910WE" name="button" type="radio">
-                                <label for="201910WE">休日</label>
+                                <label for="201910WE" class="WE">休日</label>
                             </td>
                         </tr>
                         <tr>
@@ -530,58 +611,73 @@
                             </td>
                             <td>
                                 <input id="soeWD" value="soeWD" name="button" type="radio">
-                                <label for="soeWD">平日</label>
+                                <label for="soeWD" class="WD">平日</label>
                             </td>
                             <td>
                                 <input id="soeWE" value="soeWE" name="button" type="radio">
-                                <label for="soeWE">休日</label>
+                                <label for="soeWE" class="WE">休日</label>
                             </td>
                         </tr>
                         <tr class="datecat">
-                            <td width="130px">2020/</td>
+                            <td width="140px">2020/</td>
                             <td>6/15</td>
                             <td>-</td>
                             <td><div class="datecat">7/14</div></td>
                             <td>
                                 <input id="202067WD" value="202067WD" name="button" type="radio">
-                                <label for="202067WD">平日</label>
+                                <label for="202067WD" class="WD">平日</label>
                             </td>
                             <td>
                                 <input id="202067WE" value="202067WE" name="button" type="radio">
-                                <label for="202067WE">休日</label>
+                                <label for="202067WE" class="WE">休日</label>
                             </td>
                         </tr>
+                        
+                        <!-- IMPORTANT: Duplicate from here -->
 						<tr class="datecat">
-                            <td width="130px">2020/</td> <!-- Change year -->
+                            <td>2020/</td> <!-- Change year -->
                             <td>10/1</td> <!--Change start date -->
                             <td>-</td>
                             <td><div class="datecat">10/31</div></td> <!--Change end date -->
                             <td>
                                 <input id="202010WD" value="202010WD" name="button" type="radio">
-                                <label for="202010WD">平日</label>
+                                <label for="202010WD" class="WD">平日</label>
                             </td>
                             <td>
                                 <input id="202010WE" value="202010WE" name="button" type="radio">
-                                <label for="202010WE">休日</label>
+                                <label for="202010WE" class="WE">休日</label>
                             </td>
                         </tr>
+                        <!-- IMPORTANT: Duplicate until here, immediately below -->
+                        
                     </table>
                 </form>
             </div>
             
-            <!-- Show/hide dates for selection -->
-            
-            <div class="showdates" onclick="toggleDates(this)">
+            <div id="showdates" onclick="toggleDates(this)">
                 <span>+<br>日付を選択</span>
             </div>
             
             <script>
+            
+            /* Toggle show/hide date filters */
+                
                 function toggleDates(td) {
                     $('.dates').slideToggle(300)
                     $(td).toggleClass('hidedates')
-                    $(td).html($(td).html() == '×<br>閉じる' ? '+<br>日付を選択' : '×<br>閉じる')
+                    if (td.innerHTML.indexOf('日付を選択') !== -1) {
+                        $(td).html($(td).html() == '×<br>閉じる' ? '+<br>日付を選択' : '×<br>閉じる')
+                    } else if (td.innerHTML.indexOf('Select time filters') !== -1) {
+                        $(td).html($(td).html() == '×<br>Close' ? '+<br>Select time filters' : '×<br>Close')
+                    } else if (td.innerHTML.indexOf('閉じる') !== -1) {
+                        $(td).html($(td).html() == '×<br>日付を選択' ? '+<br>閉じる' : '×<br>日付を選択')
+                    } else if (td.innerHTML.indexOf('Close') !== -1) {
+                        $(td).html($(td).html() == '×<br>Select time filters' ? '+<br>Close' : '×<br>Select time filters')
+                    }
                 }
+            
             </script>
+            
             
         </div>
 
@@ -767,8 +863,10 @@
                         }
                     }
                 })
-		    
-		    document.getElementById('201910WD').click();
+                
+                document.getElementById('201910WD').click();
+                
+
             })    
 
         </script>
