@@ -35,6 +35,7 @@
             font-weight: 700;
             text-align: center;
             transition: 0.5s;
+            cursor: pointer;
         }
         
         .language:hover {
@@ -235,29 +236,87 @@
         .dates {
             display: none;
         }
-                
-        .dateselect {
-            margin: 0 auto;
-            text-align: right;
-        }
-                
+        
         .datecat {
-            padding-top: 2px;
-            margin-right: 3px;
+            margin: 12px auto 0px auto;
+            display: block;
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            cursor: pointer;
             font-size: 12px;
+            text-align: left;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            width: 212px;
         }
         
-        .dates input[type="radio"] {
-            display: none;
+        .datecat input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 3px;
+            left: 0;
+            height: 10px;
+            width: 10px;
+            background: rgba(255,255,255,0.6);
+            border: 1px solid #b2b2b2;
+            transition: 0.5s;
+        }
+        
+        .datecat input:hover ~ .checkmark {
+            background: rgba(0,153,153,0.1);
+            border: 1px solid #009999;
+            transition: 0.3s;
         }
 
-        .dates label {
+        .datecat input:checked ~ .checkmark {
+            background: #CBE9EA;
+            border: 1px solid #009999;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .datecat input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .datecat .checkmark:after {
+            top: 3px;
+            left: 2.5px;
+            width: 4.5px;
+            height: 4px;
+            background: #009999;
+        }
+                
+        .dateday {
+            margin: -10px auto 0px auto;
+            width: 200px;
+        }
+        
+        .dateday input[type="radio"] {
+            display: none
+        }
+        
+        .dateday label {
             display: inline-block;
-            width: 30px;
+            width: 80px;
             cursor: pointer;
             background: rgba(255,255,255,0.6);
             padding: 2px 3px 1px 3px;
-            border: 1px solid #ddd;
+            border: 1px solid #b2b2b2;
             margin: 3px 0px 3px 1px;
             color: #555;
             font-size: 12px;
@@ -265,14 +324,14 @@
             transition: 0.5s;
         }
         
-        .dates label:hover {
+        .dateday label:hover {
             background: rgba(0,153,153,0.1);
             border: 1px solid #009999;
             color: #009999;
             transition: 0.3s;
         }
 
-        .dates input[type="radio"]:checked+label {
+        .dateday input[type="radio"]:checked+label {
             background: #CBE9EA;
             border: 1px solid #009999;
             color: #009999;
@@ -525,18 +584,18 @@
             $(legendm).html($(legendm).html() == 'Legend' ? '凡例' : 'Legend')
             var subheaderm = document.getElementsByClassName("subheader-mobile")
             $(subheaderm).html($(subheaderm).html() == 'Population' ? '人数' : 'Population')
-            var datecat1 = document.getElementsByClassName("datecat")[0]
-            $(datecat1).html($(datecat1).html() == 'Before COVID-19: 2019/10/1 - 31' ? '新型コロナ流行前: 2019/10/1 - 31' : 'Before COVID-19: 2019/10/1 - 31')
-            var datecat2 = document.getElementsByClassName("datecat")[1]
-            $(datecat2).html($(datecat2).html() == 'State of emergency: 2020/4/16 - 5/25' ? '緊急事態宣言中: 2020/4/16 - 5/25' : 'State of emergency: 2020/4/16 - 5/25')
-            var WD = document.getElementsByClassName("WD")
-            $(WD).html($(WD).html() == 'M-F' ? '平日' : 'M-F')
-            var WE = document.getElementsByClassName("WE")
-            $(WE).html($(WE).html() == 'S-S' ? '休日' : 'S-S')
+            var datecat1 = document.getElementsByClassName("datelabel")[0]
+            $(datecat1).html($(datecat1).html() == '2019/10/1 - 31: Before COVID-19' ? '2019/10/1 - 31: 新型コロナ流行前' : '2019/10/1 - 31: Before COVID-19')
+            var datecat2 = document.getElementsByClassName("datelabel")[1]
+            $(datecat2).html($(datecat2).html() == '2020/4/16 - 5/25: State of emergency' ? '2020/4/16 - 5/25: 緊急事態宣言中' : '2020/4/16 - 5/25: State of emergency')
+            var WD = document.getElementsByClassName("WDay")
+            $(WD).html($(WD).html() == 'Weekday' ? '平日' : 'Weekday')
+            var WE = document.getElementsByClassName("WEnd")
+            $(WE).html($(WE).html() == 'Weekend' ? '休日' : 'Weekend')
             var showdates = document.getElementById("showdates")
             if (showdates.innerHTML.indexOf('日付を選択') !== -1) {
-                $(showdates).html('+<br>Select time filters')
-            } else if (showdates.innerHTML.indexOf('Select time filters') !== -1) {
+                $(showdates).html('+<br>Select date filters')
+            } else if (showdates.innerHTML.indexOf('Select date filters') !== -1) {
                 $(showdates).html('+<br>日付を選択')
             } else if (showdates.innerHTML.indexOf('閉じる') !== -1) {
                 $(showdates).html('×<br>Close')
@@ -607,70 +666,50 @@
                 </script>
 
             </div>
-
-            <!-- IMPORTANT: Enter new <tr> rows of "dateselect" table from the bottom to add date selection for new datasets -->
             
             <div class="dates">
                 <form id="dates">
-                    <table class="dateselect">
+                    <table>
                         <tr>
-                            <td colspan="4">
-                                <div class="datecat">新型コロナ流行前: 2019/10/1 - 31</div>
-                            </td>
-                            <td>
-                                <input id="201910WD" value="201910WD" name="button" type="radio">
-                                <label for="201910WD" class="WD">平日</label>
-                            </td>
-                            <td>
-                                <input id="201910WE" value="201910WE" name="button" type="radio">
-                                <label for="201910WE" class="WE">休日</label>
-                            </td>
+                            <label class="datecat">
+                                <span class="datelabel">2019/10/1 - 31: 新型コロナ流行前</span>
+                                <input id="201910" value="201910" name="cat" type="radio">
+                                <span class="checkmark"></span>
+                            </label>
                         </tr>
                         <tr>
-                            <td colspan="4">
-                                <div class="datecat">緊急事態宣言中: 2020/4/16 - 5/25</div>
+                            <label class="datecat">
+                                <span class="datelabel">2020/4/16 - 5/25: 緊急事態宣言中</span>
+                                <input id="soe" value="soe" name="cat" type="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </tr>
+                        <tr>
+                            <label class="datecat">
+                                2020/6/15 - 7/14
+                                <input id="202067" value="202067" name="cat" type="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </tr>
+                        <tr>
+                            <label class="datecat">
+                                2020/10/1 - 10/31
+                                <input id="202010" value="202010" name="cat" type="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </tr>
+                    </table>
+                    <table class="dateday">
+                        <tr>
+                            <td>
+                                <input id="WD" value="WD" name="day" type="radio">
+                                <label for="WD" class="WDay">平日</label>
                             </td>
                             <td>
-                                <input id="soeWD" value="soeWD" name="button" type="radio">
-                                <label for="soeWD" class="WD">平日</label>
-                            </td>
-                            <td>
-                                <input id="soeWE" value="soeWE" name="button" type="radio">
-                                <label for="soeWE" class="WE">休日</label>
+                                <input id="WE" value="WE" name="day" type="radio">
+                                <label for="WE" class="WEnd">休日</label>
                             </td>
                         </tr>
-                        <tr class="datecat">
-                            <td width="140px">2020/</td>
-                            <td>6/15</td>
-                            <td>-</td>
-                            <td><div class="datecat">7/14</div></td>
-                            <td>
-                                <input id="202067WD" value="202067WD" name="button" type="radio">
-                                <label for="202067WD" class="WD">平日</label>
-                            </td>
-                            <td>
-                                <input id="202067WE" value="202067WE" name="button" type="radio">
-                                <label for="202067WE" class="WE">休日</label>
-                            </td>
-                        </tr>
-                        
-                        <!-- IMPORTANT: Duplicate from here -->
-						<tr class="datecat">
-                            <td>2020/</td> <!-- Change year -->
-                            <td>10/1</td> <!--Change start date -->
-                            <td>-</td>
-                            <td><div class="datecat">10/31</div></td> <!--Change end date -->
-                            <td>
-                                <input id="202010WD" value="202010WD" name="button" type="radio">
-                                <label for="202010WD" class="WD">平日</label>
-                            </td>
-                            <td>
-                                <input id="202010WE" value="202010WE" name="button" type="radio">
-                                <label for="202010WE" class="WE">休日</label>
-                            </td>
-                        </tr>
-                        <!-- IMPORTANT: Duplicate until here, immediately below -->
-                        
                     </table>
                 </form>
             </div>
@@ -688,12 +727,12 @@
                     $(td).toggleClass('hidedates')
                     if (td.innerHTML.indexOf('日付を選択') !== -1) {
                         $(td).html($(td).html() == '×<br>閉じる' ? '+<br>日付を選択' : '×<br>閉じる')
-                    } else if (td.innerHTML.indexOf('Select time filters') !== -1) {
-                        $(td).html($(td).html() == '×<br>Close' ? '+<br>Select time filters' : '×<br>Close')
+                    } else if (td.innerHTML.indexOf('Select date filters') !== -1) {
+                        $(td).html($(td).html() == '×<br>Close' ? '+<br>Select date filters' : '×<br>Close')
                     } else if (td.innerHTML.indexOf('閉じる') !== -1) {
                         $(td).html($(td).html() == '+<br>日付を選択' ? '×<br>閉じる' : '+<br>日付を選択')
                     } else if (td.innerHTML.indexOf('Close') !== -1) {
-                        $(td).html($(td).html() == '+<br>Select time filters' ? '×<br>Close' : '+<br>Select time filters')
+                        $(td).html($(td).html() == '+<br>Select date filters' ? '×<br>Close' : '+<br>Select date filters')
                     }
                 }
             
@@ -820,7 +859,9 @@
                 document.getElementById('slidertrack').addEventListener('input', function(e) {
                     var hour = parseInt(e.target.value)
                     var hourcode = hour*100
-                    var clicked = document.querySelector('input[name="button"]:checked').value
+                    var cat = document.querySelector('input[name="cat"]:checked').value
+                    var day = document.querySelector('input[name="day"]:checked').value
+                    var clicked = cat+day
                     filterHour = ['==', ['number', ['get', 'Time']], hourcode]
                     map.setFilter(clicked, ['all', filterHour])
                 })
@@ -859,7 +900,9 @@
                 */
                 
                 document.getElementById('dates').addEventListener('change', function(e) {
-                    var date = e.target.value
+                    var cat = document.querySelector('input[name="cat"]:checked').value
+                    var day = document.querySelector('input[name="day"]:checked').value
+                    var clicked = cat+day
                     var layers = [
 						'201910WD',
 						'201910WE',
@@ -872,7 +915,7 @@
                     ]
                     for (var i = 0; i < layers.length; i++) {
                         var layer = layers[i]
-                        if (date === layer) {
+                        if (clicked === layer) {
                             map.setLayoutProperty(layer, 'visibility', 'visible')
                             var inactiveLayers = layers.filter(el => el !== layer)
                             for (var i = 0; i < inactiveLayers.length; i++) {
@@ -885,7 +928,8 @@
                     }
                 })
                 
-                document.getElementById('201910WD').click();
+                document.getElementById('201910').click();
+                document.getElementById('WD').click();
                 
 
             })    
