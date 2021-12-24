@@ -672,22 +672,8 @@
                     <table>
                         <tr>
                             <label class="datecat">
-                                <span class="datelabel">2019/10/1 - 31: 新型コロナ流行前</span>
-                                <input id="201910" value="201910" name="cat" type="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </tr>
-                        <tr>
-                            <label class="datecat">
-                                <span class="datelabel">2020/4/16 - 5/25: 緊急事態宣言中</span>
-                                <input id="soe" value="soe" name="cat" type="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </tr>
-                        <tr>
-                            <label class="datecat">
-                                2020/6/15 - 7/14
-                                <input id="202067" value="202067" name="cat" type="radio">
+                                2021/10/1 - 10/31
+                                <input id="202110" value="202110" name="cat" type="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </tr>
@@ -700,8 +686,15 @@
                         </tr>
                         <tr>
                             <label class="datecat">
-                                2021/4/1 - 4/30
-                                <input id="202104" value="202104" name="cat" type="radio">
+                                <span class="datelabel">2020/4/16 - 5/25: 緊急事態宣言中</span>
+                                <input id="soe" value="soe" name="cat" type="radio">
+                                <span class="checkmark"></span>
+                            </label>
+                        </tr>
+                        <tr>
+                            <label class="datecat">
+                                <span class="datelabel">2019/10/1 - 31: 新型コロナ流行前</span>
+                                <input id="201910" value="201910" name="cat" type="radio">
                                 <span class="checkmark"></span>
                             </label>
                         </tr>
@@ -830,8 +823,8 @@
                     ['202067WE', 'mapbox://nyamato.1jvhckwd', '202067WE-5b8bb1'],
                     ['202010WD', 'mapbox://nyamato.dfy6k7nt', '202010WD-5avomy'],
                     ['202010WE', 'mapbox://nyamato.0ykx0fbs', '202010WE-206244'],
-                    ['202104WD', 'mapbox://nyamato.18ysdwtr', '202104WD-0nk0dt'],
-                    ['202104WE', 'mapbox://nyamato.dkxmagso', '202104WE-667kf6'],
+                    ['202110WD', 'mapbox://nyamato.byvo56cn', '202110WD-7504n8'],
+                    ['202110WE', 'mapbox://nyamato.5bbzx54i', '202110WE-0yrov5'],
                 ]
                 
                 function addsourcelayer(data) {
@@ -921,8 +914,8 @@
 						'202067WE',
 						'202010WD',
 						'202010WE',
-						'202104WD',
-						'202104WE',
+						'202110WD',
+						'202110WE',
                     ]
                     for (var i = 0; i < layers.length; i++) {
                         var layer = layers[i]
@@ -939,7 +932,7 @@
                     }
                 })
                 
-                document.getElementById('201910').click();
+                document.getElementById('202110').click();
                 document.getElementById('WD').click();
                 
 
