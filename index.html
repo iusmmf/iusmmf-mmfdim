@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset='utf-8' />
     <title>MMF | 東京 23 区全体の時間帯別人数</title>
     <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' />
@@ -8,11 +9,10 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
     <style>
-        
         body {
             padding: 0;
             margin: 0;
-            font-family:  'Helvetica Neue', Helvetica, Arial, Sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, Sans-serif;
         }
 
         #map {
@@ -28,7 +28,7 @@
             top: 40px;
             left: 40px;
             width: 65px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             padding: 5px;
             border: 1px solid #b2b2b2;
             font: 13px 'Yu Gothic', Arial, Helvetica, sans-serif;
@@ -37,32 +37,32 @@
             transition: 0.5s;
             cursor: pointer;
         }
-        
+
         .language:hover {
-            background: rgba(0,153,153,0.1);
+            background: rgba(0, 153, 153, 0.1);
             border: 1px solid #009999;
             color: #009999;
             transition: 0.3s;
         }
-        
+
         #info {
             position: absolute;
             top: 75px;
             left: 40px;
             width: 202px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border: 1px solid #b2b2b2;
             margin-bottom: 20px;
             font: 11px/20px 'Yu Gothic', Arial, Helvetica, sans-serif;
         }
-        
+
         .header {
             margin-bottom: 20px;
             font: 25px/33px 'Yu Gothic', Arial, Helvetica, sans-serif;
             font-weight: 900;
         }
-        
+
         .subheader {
             margin-bottom: 10px;
             font-size: 15px;
@@ -71,49 +71,84 @@
         }
 
         .color {
-            height:12px;
-            width:12px;
+            height: 12px;
+            width: 12px;
         }
-        
-        .\#0 {background-color: #5D4EA1}
-        .\#1000 {background-color: #3582BA}
-        .\#2000 {background-color: #4BB19F}
-        .\#3000 {background-color: #78B58B}
-        .\#4500 {background-color: #91B260}
-        .\#6000 {background-color: #ADAC4A}
-        .\#8000 {background-color: #C7A12C}
-        .\#10000 {background-color: #D68C1C}
-        .\#15000 {background-color: #ED701C}
-        .\#20000 {background-color: #EB462C}
-        .\#30000 {background-color: #D31D32}
-        .\#40000 {background-color: #A41C3F}
+
+        .\#0 {
+            background-color: #5D4EA1
+        }
+
+        .\#1000 {
+            background-color: #3582BA
+        }
+
+        .\#2000 {
+            background-color: #4BB19F
+        }
+
+        .\#3000 {
+            background-color: #78B58B
+        }
+
+        .\#4500 {
+            background-color: #91B260
+        }
+
+        .\#6000 {
+            background-color: #ADAC4A
+        }
+
+        .\#8000 {
+            background-color: #C7A12C
+        }
+
+        .\#10000 {
+            background-color: #D68C1C
+        }
+
+        .\#15000 {
+            background-color: #ED701C
+        }
+
+        .\#20000 {
+            background-color: #EB462C
+        }
+
+        .\#30000 {
+            background-color: #D31D32
+        }
+
+        .\#40000 {
+            background-color: #A41C3F
+        }
 
         .colorlabel {
             margin-left: 2px;
         }
-        
+
         .slider {
             margin: 5px 0px 20px 0px;
         }
-        
+
         #filters {
             position: absolute;
             bottom: 50px;
             left: 40px;
             width: 320px;
-            background: rgba(255,255,255,0.9);
+            background: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border: 1px solid #b2b2b2;
             font: 11px/20px 'Yu Gothic', Arial, Helvetica, sans-serif;
             text-align: center;
         }
-        
+
         input[type=range] {
             -webkit-appearance: none;
             width: 290px;
             background: transparent;
         }
-        
+
         input[type=range]:focus {
             outline: none;
         }
@@ -135,15 +170,15 @@
             height: 1px;
             width: 290px;
             cursor: pointer;
-            background: #b2b2b2; 
+            background: #b2b2b2;
             border: none;
         }
-        
+
         input[type=range]::-moz-range-track {
             height: 1px;
             width: 290px;
             cursor: pointer;
-            background: #b2b2b2; 
+            background: #b2b2b2;
             border: none;
         }
 
@@ -154,11 +189,11 @@
             cursor: pointer;
             background: none;
             border-radius: 3px;
-            margin-left:0px;
+            margin-left: 0px;
             margin-top: -8px;
             border: none;
         }
-        
+
         input[type=range]::-moz-range-thumb {
             -moz-appearance: none;
             height: 20px;
@@ -166,11 +201,11 @@
             cursor: pointer;
             background: none;
             border-radius: 3px;
-            margin-left:0px;
+            margin-left: 0px;
             margin-top: -8px;
             border: none;
         }
-        
+
         input[type=range]::-ms-thumb {
             appearance: none;
             height: 20px;
@@ -178,11 +213,11 @@
             cursor: pointer;
             background: none;
             border-radius: 3px;
-            margin-left:0px;
+            margin-left: 0px;
             margin-top: -8px;
             border: none;
         }
-        
+
         .sliderthumb {
             display: block;
             position: absolute;
@@ -200,7 +235,7 @@
             line-height: 24px;
             text-align: center;
         }
-        
+
         #showdates {
             width: 290px;
             cursor: pointer;
@@ -209,13 +244,13 @@
             margin: 10px auto 0px auto;
             transition: 0.5s;
         }
-        
+
         #showdates:hover {
-            background: rgba(0,153,153,0.1);
+            background: rgba(0, 153, 153, 0.1);
             color: #009999;
             transition: 0.5s;
         }
-        
+
         .hidedates {
             width: 290px;
             cursor: pointer;
@@ -226,17 +261,17 @@
             margin: 10px auto 0px auto;
             transition: 0.5s;
         }
-        
+
         .hidedates:hover {
-            background: rgba(0,153,153,0.1);
+            background: rgba(0, 153, 153, 0.1);
             color: #009999;
             transition: 0.5s;
         }
-        
+
         .dates {
             display: none;
         }
-        
+
         .datecat {
             margin: 12px auto 0px auto;
             display: block;
@@ -252,7 +287,7 @@
             user-select: none;
             width: 212px;
         }
-        
+
         .datecat input[type="radio"] {
             position: absolute;
             opacity: 0;
@@ -260,36 +295,36 @@
             height: 0;
             width: 0;
         }
-        
+
         .checkmark {
             position: absolute;
             top: 3px;
             left: 0;
             height: 10px;
             width: 10px;
-            background: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.6);
             border: 1px solid #b2b2b2;
             transition: 0.5s;
         }
-        
-        .datecat input:hover ~ .checkmark {
-            background: rgba(0,153,153,0.1);
+
+        .datecat input:hover~.checkmark {
+            background: rgba(0, 153, 153, 0.1);
             border: 1px solid #009999;
             transition: 0.3s;
         }
 
-        .datecat input:checked ~ .checkmark {
+        .datecat input:checked~.checkmark {
             background: #CBE9EA;
             border: 1px solid #009999;
         }
-        
+
         .checkmark:after {
             content: "";
             position: absolute;
             display: none;
         }
-        
-        .datecat input:checked ~ .checkmark:after {
+
+        .datecat input:checked~.checkmark:after {
             display: block;
         }
 
@@ -300,21 +335,21 @@
             height: 4px;
             background: #009999;
         }
-                
+
         .dateday {
             margin: -10px auto 0px auto;
             width: 200px;
         }
-        
+
         .dateday input[type="radio"] {
             display: none
         }
-        
+
         .dateday label {
             display: inline-block;
             width: 80px;
             cursor: pointer;
-            background: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.6);
             padding: 2px 3px 1px 3px;
             border: 1px solid #b2b2b2;
             margin: 3px 0px 3px 1px;
@@ -323,9 +358,9 @@
             text-align: center;
             transition: 0.5s;
         }
-        
+
         .dateday label:hover {
-            background: rgba(0,153,153,0.1);
+            background: rgba(0, 153, 153, 0.1);
             border: 1px solid #009999;
             color: #009999;
             transition: 0.3s;
@@ -337,31 +372,31 @@
             color: #009999;
             font-weight: 800;
         }
-        
+
         #topbar {
-            display:none;
+            display: none;
         }
-        
+
         .menu {
-            display:none;
+            display: none;
         }
-        
+
         #info-mobile {
-            display:none;
+            display: none;
         }
 
         .header-mobile {
-            display:none;
+            display: none;
         }
-        
+
         /* Optimize for mobile devices (screen width below 768px) */
-        
+
         @media screen and (max-width:768px) {
-            
+
             #map {
                 zoom: 33%;
             }
-            
+
             #topbar {
                 display: block;
                 position: absolute;
@@ -369,32 +404,32 @@
                 left: 0px;
                 height: 70px;
                 width: 100%;
-                background: rgba(255,255,255,0.95);
+                background: rgba(255, 255, 255, 0.95);
                 border-bottom: 1px solid #b2b2b2;
             }
-            
+
             .header-mobile-container {
                 display: table;
-                float:left;
+                float: left;
                 margin: 0px 0px 0px 20px;
                 height: 100%;
                 font: 18px 'Yu Gothic', Arial, Helvetica, sans-serif;
                 line-height: 20px;
                 font-weight: 900;
             }
-            
+
             .header-mobile {
                 display: table-cell;
                 vertical-align: middle;
             }
-            
+
             .language-mobile {
                 display: block;
                 float: right;
                 margin: 20px 20px 0px 0px;
                 width: 55px;
                 height: 24px;
-                background: rgba(255,255,255,0.9);
+                background: rgba(255, 255, 255, 0.9);
                 border: 1px solid #cdcdcd;
                 font: 12px 'Yu Gothic', Arial, Helvetica, sans-serif;
                 line-height: 24px;
@@ -403,18 +438,18 @@
             }
 
             .language-mobile:focus {
-                background: rgba(0,153,153,0.1);
+                background: rgba(0, 153, 153, 0.1);
                 border: 1px solid #009999;
                 color: #009999;
                 transition: 0.2s;
             }
-            
+
             .legendbutton {
                 display: block;
                 float: right;
                 width: 55px;
                 height: 24px;
-                background: rgba(255,255,255,0.7);
+                background: rgba(255, 255, 255, 0.7);
                 border: 1px solid #cdcdcd;
                 margin: 20px 8px 0px 0px;
                 color: #000;
@@ -422,18 +457,19 @@
                 line-height: 24px;
                 text-align: center;
             }
-            
-            #info, .language {
+
+            #info,
+            .language {
                 display: none;
             }
-            
+
             .info-mobile {
                 display: none;
                 position: absolute;
                 top: 80px;
                 right: 20px;
                 width: 202px;
-                background: rgba(255,255,255,0.95);
+                background: rgba(255, 255, 255, 0.95);
                 padding: 15px;
                 border: 1px solid #b2b2b2;
                 font: 11px/20px 'Yu Gothic', Arial, Helvetica, sans-serif;
@@ -445,13 +481,13 @@
                 font: 15px 'Yu Gothic', Arial, Helvetica, sans-serif;
                 font-weight: 700;
             }
-            
+
             #filters {
                 bottom: 20px;
                 margin: 0px auto;
-                width:300px;
+                width: 300px;
             }
-        
+
             #showdates:hover {
                 background: none;
                 color: #b2b2b2;
@@ -462,21 +498,21 @@
                 color: #000;
             }
         }
-        
+
         @media screen and (max-width:375px) {
-            
+
             .header-mobile {
                 display: block;
-                float:left;
+                float: left;
                 margin: 12px 0px 12px 20px;
                 font: 16px 'Yu Gothic', Arial, Helvetica, sans-serif;
                 font-weight: 900;
             }
-            
+
             .header-mobile-container {
                 width: 180px;
             }
-            
+
             #filters {
                 bottom: 20px;
                 width: 300px;
@@ -484,94 +520,154 @@
                 margin: 0px auto;
             }
         }
-      
-      </style>
-    </head>
-    
-    
-    <body>
+    </style>
+</head>
 
-        <div id='map'></div>
 
-        <!-- Only in mobile view: top bar and color legend -->
+<body>
 
-        <div id="topbar">
-            <div class="header-mobile-container"><div class="header-mobile">東京 23 区全体の時間帯別人数</div>
-            </div>
-            <div class="language-mobile" onclick="toggleLan(this)">English</div>
-            <div class="legendbutton">凡例</div>
+    <div id='map'></div>
+
+    <!-- Only in mobile view: top bar and color legend -->
+
+    <div id="topbar">
+        <div class="header-mobile-container">
+            <div class="header-mobile">東京 23 区全体の時間帯別人数</div>
         </div>
+        <div class="language-mobile" onclick="toggleLan(this)">English</div>
+        <div class="legendbutton">凡例</div>
+    </div>
 
-        <div class="info-mobile">
-            <div class="subheader-mobile">人数</div>
-            <table>
-                <tr>
-                    <td><div class="color #0"></div></td><td><div class="colorlabel">0 - 1000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #8000"></div></td><td><div class="colorlabel">8001 - 10000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #1000"></div></td><td><div class="colorlabel">1001 - 2000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #10000"></div></td><td><div class="colorlabel">10001 - 15000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #2000"></div></td><td><div class="colorlabel">2001 - 3000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #15000"></div></td><td><div class="colorlabel">15001 - 20000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #3000"></div></td><td><div class="colorlabel">3001 - 4500</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #20000"></div></td><td><div class="colorlabel">20001 - 30000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #4500"></div></td><td><div class="colorlabel">4501 - 6000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #30000"></div></td><td><div class="colorlabel">30001 - 40000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #6000"></div></td><td><div class="colorlabel">6001 - 8000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #40000"></div></td><td><div class="colorlabel">40000 +</div></td>
-                </tr>
-            </table>
-        </div>
+    <div class="info-mobile">
+        <div class="subheader-mobile">人数</div>
+        <table>
+            <tr>
+                <td>
+                    <div class="color #0"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">0 - 1000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #8000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">8001 - 10000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #1000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">1001 - 2000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #10000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">10001 - 15000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #2000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">2001 - 3000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #15000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">15001 - 20000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #3000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">3001 - 4500</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #20000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">20001 - 30000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #4500"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">4501 - 6000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #30000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">30001 - 40000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #6000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">6001 - 8000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #40000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">40000 +</div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
-        <!-- Show/hide legend in mobile view -->
-        
-        <script>
-            $(".legendbutton").click(function(){
-              $(".info-mobile").toggle();
-                if($(".info-mobile").is(":visible")){
-                    $(".legendbutton").css({
-                        "background": "#CBE9EA",
-                        "color": "#009999",
-                        "font-weight": "800",
-                        "border": "1px solid #009999",
-                    })
-                }
-                else{
-                    $(".legendbutton").css({
-                        "background": "rgba(255,255,255,0.7)",
-                        "color": "#666",
-                        "font-weight": "normal",
-                        "border": "1px solid #cdcdcd",
-                    })
-                }
-            });     
-        </script>
+    <!-- Show/hide legend in mobile view -->
 
-        <!-- Start of desktop view -->
-        
-        <!-- Title and color legend -->
+    <script>
+        $(".legendbutton").click(function () {
+            $(".info-mobile").toggle();
+            if ($(".info-mobile").is(":visible")) {
+                $(".legendbutton").css({
+                    "background": "#CBE9EA",
+                    "color": "#009999",
+                    "font-weight": "800",
+                    "border": "1px solid #009999",
+                })
+            }
+            else {
+                $(".legendbutton").css({
+                    "background": "rgba(255,255,255,0.7)",
+                    "color": "#666",
+                    "font-weight": "normal",
+                    "border": "1px solid #cdcdcd",
+                })
+            }
+        });     
+    </script>
 
-        <div class="language" onclick="toggleLan(this)">English</div>
-    
-        <script>
-            
+    <!-- Start of desktop view -->
+
+    <!-- Title and color legend -->
+
+    <div class="language" onclick="toggleLan(this)">English</div>
+
+    <script>
+
         /* Toggle language between JP/EN */
-            
+
         function toggleLan(lan) {
             $(lan).html($(lan).html() == '日本語' ? 'English' : '日本語')
             var header = document.getElementsByClassName("header")
@@ -604,340 +700,412 @@
             }
 
         }
-        
-        </script>
-        
-        <div id="info">
 
-            <div class="header">東京 23 区全体の<br>時間帯別人数</div>
-            
-            <div class="subheader">人数<br><span id="test"></span></div>
+    </script>
 
-            <table>
-                <tr>
-                    <td><div class="color #0"></div></td><td><div class="colorlabel">0 - 1000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #8000"></div></td><td><div class="colorlabel">8001 - 10000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #1000"></div></td><td><div class="colorlabel">1001 - 2000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #10000"></div></td><td><div class="colorlabel">10001 - 15000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #2000"></div></td><td><div class="colorlabel">2001 - 3000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #15000"></div></td><td><div class="colorlabel">15001 - 20000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #3000"></div></td><td><div class="colorlabel">3001 - 4500</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #20000"></div></td><td><div class="colorlabel">20001 - 30000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #4500"></div></td><td><div class="colorlabel">4501 - 6000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #30000"></div></td><td><div class="colorlabel">30001 - 40000</div></td>
-                </tr>
-                <tr>
-                    <td><div class="color #6000"></div></td><td><div class="colorlabel">6001 - 8000</div></td>
-                    <td width="12px"></td>
-                    <td><div class="color #40000"></div></td><td><div class="colorlabel">40000 +</div></td>
-                </tr>
-            </table>
+    <div id="info">
 
-        </div>
+        <div class="header">東京 23 区全体の<br>時間帯別人数</div>
 
-        <!-- Time slider and date selector -->
-        
-        <div id='filters'>
+        <div class="subheader">人数<br><span id="test"></span></div>
 
-            <div class='slider'>
-                <input id="slidertrack" class="slidertrack" type='range' name='time' min='0' max='23' step='1' value='12' />
-                <output class="sliderthumb" id="timevalue"></output>
+        <table>
+            <tr>
+                <td>
+                    <div class="color #0"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">0 - 1000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #8000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">8001 - 10000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #1000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">1001 - 2000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #10000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">10001 - 15000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #2000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">2001 - 3000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #15000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">15001 - 20000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #3000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">3001 - 4500</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #20000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">20001 - 30000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #4500"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">4501 - 6000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #30000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">30001 - 40000</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="color #6000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">6001 - 8000</div>
+                </td>
+                <td width="12px"></td>
+                <td>
+                    <div class="color #40000"></div>
+                </td>
+                <td>
+                    <div class="colorlabel">40000 +</div>
+                </td>
+            </tr>
+        </table>
 
-                <!-- Correct slider thumb position in Firefox -->
-                <script>
-                    if (navigator.userAgent.indexOf("Firefox") > -1) {
-                        $(".sliderthumb").css({
-                            "margin-top": "-30px",
-                        })
-                    }
-                </script>
+    </div>
 
-            </div>
-            
-            <div class="dates">
-                <form id="dates">
-                    <table>
-                        <tr>
-                            <label class="datecat">
-                                2021/10/1 - 10/31
-                                <input id="202110" value="202110" name="cat" type="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </tr>
-                        <tr>
-                            <label class="datecat">
-                                2020/10/1 - 10/31
-                                <input id="202010" value="202010" name="cat" type="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </tr>
-                        <tr>
-                            <label class="datecat">
-                                <span class="datelabel">2020/4/16 - 5/25: 緊急事態宣言中</span>
-                                <input id="soe" value="soe" name="cat" type="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </tr>
-                        <tr>
-                            <label class="datecat">
-                                <span class="datelabel">2019/10/1 - 31: 新型コロナ流行前</span>
-                                <input id="201910" value="201910" name="cat" type="radio">
-                                <span class="checkmark"></span>
-                            </label>
-                        </tr>
-                    </table>
-                    <table class="dateday">
-                        <tr>
-                            <td>
-                                <input id="WD" value="WD" name="day" type="radio">
-                                <label for="WD" class="WDay">平日</label>
-                            </td>
-                            <td>
-                                <input id="WE" value="WE" name="day" type="radio">
-                                <label for="WE" class="WEnd">休日</label>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
-            
-            <div id="showdates" onclick="toggleDates(this)">
-                <span>+<br>日付を選択</span>
-            </div>
-            
+    <!-- Time slider and date selector -->
+
+    <div id='filters'>
+
+        <div class='slider'>
+            <input id="slidertrack" class="slidertrack" type='range' name='time' min='0' max='23' step='1' value='12' />
+            <output class="sliderthumb" id="timevalue"></output>
+
+            <!-- Correct slider thumb position in Firefox -->
             <script>
-            
-            /* Toggle show/hide date filters */
-                
-                function toggleDates(td) {
-                    $('.dates').slideToggle(300)
-                    $(td).toggleClass('hidedates')
-                    if (td.innerHTML.indexOf('日付を選択') !== -1) {
-                        $(td).html($(td).html() == '×<br>閉じる' ? '+<br>日付を選択' : '×<br>閉じる')
-                    } else if (td.innerHTML.indexOf('Select date filters') !== -1) {
-                        $(td).html($(td).html() == '×<br>Close' ? '+<br>Select date filters' : '×<br>Close')
-                    } else if (td.innerHTML.indexOf('閉じる') !== -1) {
-                        $(td).html($(td).html() == '+<br>日付を選択' ? '×<br>閉じる' : '+<br>日付を選択')
-                    } else if (td.innerHTML.indexOf('Close') !== -1) {
-                        $(td).html($(td).html() == '+<br>Select date filters' ? '×<br>Close' : '+<br>Select date filters')
-                    }
+                if (navigator.userAgent.indexOf("Firefox") > -1) {
+                    $(".sliderthumb").css({
+                        "margin-top": "-30px",
+                    })
                 }
-            
             </script>
-            
-            
+
         </div>
 
-        <!-- Javascript to load maps and control user interaction -->
+        <div class="dates">
+            <form id="dates">
+                <table>
+                    <tr>
+                        <label class="datecat">
+                            2022/10/1 - 10/31
+                            <input id="202210" value="202210" name="cat" type="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </tr>
+                    <tr>
+                        <label class="datecat">
+                            2021/10/1 - 10/31
+                            <input id="202110" value="202110" name="cat" type="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </tr>
+                    <tr>
+                        <label class="datecat">
+                            2020/10/1 - 10/31
+                            <input id="202010" value="202010" name="cat" type="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </tr>
+                    <tr>
+                        <label class="datecat">
+                            <span class="datelabel">2020/4/16 - 5/25: 緊急事態宣言中</span>
+                            <input id="soe" value="soe" name="cat" type="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </tr>
+                    <tr>
+                        <label class="datecat">
+                            <span class="datelabel">2019/10/1 - 31: 新型コロナ流行前</span>
+                            <input id="201910" value="201910" name="cat" type="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </tr>
+                </table>
+                <table class="dateday">
+                    <tr>
+                        <td>
+                            <input id="WD" value="WD" name="day" type="radio">
+                            <label for="WD" class="WDay">平日</label>
+                        </td>
+                        <td>
+                            <input id="WE" value="WE" name="day" type="radio">
+                            <label for="WE" class="WEnd">休日</label>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div id="showdates" onclick="toggleDates(this)">
+            <span>+<br>日付を選択</span>
+        </div>
 
         <script>
-            
-            mapboxgl.accessToken = 'pk.eyJ1IjoibnlhbWF0byIsImEiOiJja2Y4dzNkOW8wY3MwMnFvM29iNnJzNzVzIn0.GHlHwu3r5YjKBU3qAKvccQ'
 
-            // Load map view based on device type
+            /* Toggle show/hide date filters */
 
-            var mq = window.matchMedia( "(min-width: 768px)" )
-            const ua = navigator.userAgent
+            function toggleDates(td) {
+                $('.dates').slideToggle(300)
+                $(td).toggleClass('hidedates')
+                if (td.innerHTML.indexOf('日付を選択') !== -1) {
+                    $(td).html($(td).html() == '×<br>閉じる' ? '+<br>日付を選択' : '×<br>閉じる')
+                } else if (td.innerHTML.indexOf('Select date filters') !== -1) {
+                    $(td).html($(td).html() == '×<br>Close' ? '+<br>Select date filters' : '×<br>Close')
+                } else if (td.innerHTML.indexOf('閉じる') !== -1) {
+                    $(td).html($(td).html() == '+<br>日付を選択' ? '×<br>閉じる' : '+<br>日付を選択')
+                } else if (td.innerHTML.indexOf('Close') !== -1) {
+                    $(td).html($(td).html() == '+<br>Select date filters' ? '×<br>Close' : '+<br>Select date filters')
+                }
+            }
 
-            if (mq.matches){
+        </script>
+
+
+    </div>
+
+    <!-- Javascript to load maps and control user interaction -->
+
+    <script>
+
+        mapboxgl.accessToken = 'pk.eyJ1IjoibnlhbWF0byIsImEiOiJja2Y4dzNkOW8wY3MwMnFvM29iNnJzNzVzIn0.GHlHwu3r5YjKBU3qAKvccQ'
+
+        // Load map view based on device type
+
+        var mq = window.matchMedia("(min-width: 768px)")
+        const ua = navigator.userAgent
+
+        if (mq.matches) {
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/nyamato/ckfnam5n606jc19r1f7jsjvd4',
+                minZoom: 11,
+                maxZoom: 13,
+                center: [139.7569, 35.6314],
+                pitch: 47,
+                bearing: -28.6,
+                zoom: 11,
+            })
+        } else {
+            if (/iPhone/i.test(navigator.userAgent)) {
                 var map = new mapboxgl.Map({
                     container: 'map',
                     style: 'mapbox://styles/nyamato/ckfnam5n606jc19r1f7jsjvd4',
                     minZoom: 11,
                     maxZoom: 13,
-                    center: [139.7569, 35.6314],
+                    center: [139.780000, 35.740000],
                     pitch: 47,
-                    bearing:-28.6,
+                    bearing: -28.6,
                     zoom: 11,
                 })
             } else {
-                if ( /iPhone/i.test(navigator.userAgent)) {
-                    var map = new mapboxgl.Map({
-                        container: 'map',
-                        style: 'mapbox://styles/nyamato/ckfnam5n606jc19r1f7jsjvd4',
-                        minZoom: 11,
-                        maxZoom: 13,
-                        center: [139.780000, 35.740000],
-                        pitch: 47,
-                        bearing:-28.6,
-                        zoom: 11,
-                    })        
-                } else {
-                    var map = new mapboxgl.Map({
-                        container: 'map',
-                        style: 'mapbox://styles/nyamato/ckfnam5n606jc19r1f7jsjvd4',
-                        minZoom: 11,
-                        maxZoom: 13,
-                        center: [139.755000, 35.700000],
-                        pitch: 47,
-                        bearing:-28.6,
-                        zoom: 11,
-                    })           
+                var map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/nyamato/ckfnam5n606jc19r1f7jsjvd4',
+                    minZoom: 11,
+                    maxZoom: 13,
+                    center: [139.755000, 35.700000],
+                    pitch: 47,
+                    bearing: -28.6,
+                    zoom: 11,
+                })
+            }
+        }
+
+
+        /*
+        Load data sources and layers for map
+        IMPORTANT: Add a new set of dataset name, Tileset ID in URL format, and Tileset name, for each new dataset
+        */
+
+        map.on('load', function () {
+
+            var colorScale = [
+                'step',
+                ['get', 'Population'],
+                '#5D4EA1',
+                1000, '#3582BA',
+                2000, '#54D1BC',
+                3000, '#A6FFC2',
+                4500, '#CBFA84',
+                6000, '#F2F063',
+                8000, '#FFCC33',
+                10000, '#F29C11',
+                15000, '#F7700F',
+                20000, '#DB3C23',
+                30000, '#B31225',
+                40000, '#85092E',
+            ]
+
+            var sourcelayer = [
+                ['201910WD', 'mapbox://nyamato.8afpdpog', '201910WD-17q85j'],
+                ['201910WE', 'mapbox://nyamato.8as5rhyz', '201910WE-9rmcic'],
+                ['soeWD', 'mapbox://nyamato.955hnchc', 'soeWD-d26ilu'],
+                ['soeWE', 'mapbox://nyamato.5sas37d2', 'soeWE-8cwmqm'],
+                ['202067WD', 'mapbox://nyamato.6d261hgn', '202067WD-2eo1m5'],
+                ['202067WE', 'mapbox://nyamato.1jvhckwd', '202067WE-5b8bb1'],
+                ['202010WD', 'mapbox://nyamato.4dtbz8t9', '202010WD-73rfz0'],
+                ['202010WE', 'mapbox://nyamato.4n4nkyl0', '202010WE-3v5152'],
+                ['202110WD', 'mapbox://nyamato.byvo56cn', '202110WD-7504n8'],
+                ['202110WE', 'mapbox://nyamato.5bbzx54i', '202110WE-0yrov5'],
+                ['202210WD', 'mapbox://nyamato.3y4twfwr', '202210WD-ca7caz'],
+                ['202210WE', 'mapbox://nyamato.61ysybzi', '202210WE-ag5ic9'],
+            ]
+
+            function addsourcelayer(data) {
+                for (var i = 0; i < data.length; i++) {
+                    map.addSource(data[i][0], {
+                        type: 'vector',
+                        url: data[i][1],
+                    })
+                    map.addLayer({
+                        id: data[i][0],
+                        type: 'fill-extrusion',
+                        source: data[i][0],
+                        'source-layer': data[i][2],
+                        paint: {
+                            'fill-extrusion-color': colorScale,
+                            'fill-extrusion-height': [
+                                '*',
+                                ['get', 'Population'],
+                                0.15
+                            ],
+                        },
+                        filter: ['==', ['number', ['get', 'Time']], 1200],
+                        layout: {
+                            visibility: 'visible',
+                        }
+                    })
                 }
             }
 
+            addsourcelayer(sourcelayer)
 
-            /*
-            Load data sources and layers for map
-            IMPORTANT: Add a new set of dataset name, Tileset ID in URL format, and Tileset name, for each new dataset
-            */
+            // Loads map based on value of time slider
 
-            map.on('load', function() {
-                
-                var colorScale = [
-                            'step',
-                            ['get', 'Population'],
-                            '#5D4EA1',
-                            1000, '#3582BA',
-                            2000, '#54D1BC',
-                            3000, '#A6FFC2',
-                            4500, '#CBFA84',
-                            6000, '#F2F063',
-                            8000, '#FFCC33',
-                            10000, '#F29C11',
-                            15000, '#F7700F',
-                            20000, '#DB3C23',
-                            30000, '#B31225',
-                            40000, '#85092E',
-                        ]
-                
-                var sourcelayer = [
-                    ['201910WD', 'mapbox://nyamato.8afpdpog', '201910WD-17q85j'],
-                    ['201910WE', 'mapbox://nyamato.8as5rhyz', '201910WE-9rmcic'],
-                    ['soeWD', 'mapbox://nyamato.955hnchc', 'soeWD-d26ilu'],
-                    ['soeWE', 'mapbox://nyamato.5sas37d2', 'soeWE-8cwmqm'],
-                    ['202067WD', 'mapbox://nyamato.6d261hgn', '202067WD-2eo1m5'],
-                    ['202067WE', 'mapbox://nyamato.1jvhckwd', '202067WE-5b8bb1'],
-                    ['202010WD', 'mapbox://nyamato.4dtbz8t9', '202010WD-73rfz0'],
-                    ['202010WE', 'mapbox://nyamato.4n4nkyl0', '202010WE-3v5152'],
-                    ['202110WD', 'mapbox://nyamato.byvo56cn', '202110WD-7504n8'],
-                    ['202110WE', 'mapbox://nyamato.5bbzx54i', '202110WE-0yrov5'],
-                ]
-                
-                function addsourcelayer(data) {
-                    for(var i = 0; i < data.length; i++){
-                        map.addSource(data[i][0], {
-                        type: 'vector',
-                        url: data[i][1],
-                        })
-                        map.addLayer({
-                            id: data[i][0],
-                            type: 'fill-extrusion',
-                            source: data[i][0],
-                            'source-layer': data[i][2],
-                            paint: {
-                                'fill-extrusion-color': colorScale,
-                                'fill-extrusion-height': [
-                                    '*',
-                                    ['get', 'Population'],
-                                    0.15
-                                ], 
-                            },
-                            filter: ['==', ['number', ['get', 'Time']], 1200],
-                            layout: {
-                                visibility: 'visible',
-                            }
-                        })
-                    }
-                }
-                
-                addsourcelayer(sourcelayer)
-                
-                // Loads map based on value of time slider
-                
-                document.getElementById('slidertrack').addEventListener('input', function(e) {
-                    var hour = parseInt(e.target.value)
-                    var hourcode = hour*100
-                    var cat = document.querySelector('input[name="cat"]:checked').value
-                    var day = document.querySelector('input[name="day"]:checked').value
-                    var clicked = cat+day
-                    filterHour = ['==', ['number', ['get', 'Time']], hourcode]
-                    map.setFilter(clicked, ['all', filterHour])
-                })
-                
-                // Sets position of slider thumb from user interaction
+            document.getElementById('slidertrack').addEventListener('input', function (e) {
+                var hour = parseInt(e.target.value)
+                var hourcode = hour * 100
+                var cat = document.querySelector('input[name="cat"]:checked').value
+                var day = document.querySelector('input[name="day"]:checked').value
+                var clicked = cat + day
+                filterHour = ['==', ['number', ['get', 'Time']], hourcode]
+                map.setFilter(clicked, ['all', filterHour])
+            })
 
-                const allRanges = document.querySelectorAll(".slider")
-                allRanges.forEach(wrap => {
-                    const slider = wrap.querySelector(".slidertrack")
-                    const thumb = wrap.querySelector(".sliderthumb")
-                    slider.addEventListener("input", () => {
-                        setBubble(slider, thumb)
-                    })
+            // Sets position of slider thumb from user interaction
+
+            const allRanges = document.querySelectorAll(".slider")
+            allRanges.forEach(wrap => {
+                const slider = wrap.querySelector(".slidertrack")
+                const thumb = wrap.querySelector(".sliderthumb")
+                slider.addEventListener("input", () => {
                     setBubble(slider, thumb)
                 })
+                setBubble(slider, thumb)
+            })
 
-                /*
-                Corrects position of CSS-styled thumb against default (invisible) thumb, and sets time value as text in thumb
-                Some numbers are specific to the CSS styling of slider track and thumb, and must be changed along with the CSS
-                */
-                
-                function setBubble(slider, thumb) {
-                    const val = slider.value
-                    const min = slider.min ? slider.min : 0
-                    const max = slider.max ? slider.max : 85 // '85' based on CSS
-                    const newVal = Number(((val - min) * 85) / (max - min)) // '85' based on CSS
-                    const ampm = val >= 12 ? 'PM' : 'AM'
-                    const hour12 = val % 12 ? val % 12 : 12
-                    thumb.innerHTML = hour12 + '&nbsp;' + ampm
-                    thumb.style.left = `calc(${newVal}% + 23px + (${23 - newVal * 0.50}px))` // equation values based on CSS
-                }
+            /*
+            Corrects position of CSS-styled thumb against default (invisible) thumb, and sets time value as text in thumb
+            Some numbers are specific to the CSS styling of slider track and thumb, and must be changed along with the CSS
+            */
 
-                /*
-                Loads map based on selected date
-                IMPORTANT: Add new dataset names into "layers" array
-                */
-                
-                document.getElementById('dates').addEventListener('change', function(e) {
-                    var cat = document.querySelector('input[name="cat"]:checked').value
-                    var day = document.querySelector('input[name="day"]:checked').value
-                    var clicked = cat+day
-                    var layers = [
-						'201910WD',
-						'201910WE',
-						'soeWD',
-						'soeWE',
-						'202067WD',
-						'202067WE',
-						'202010WD',
-						'202010WE',
-						'202110WD',
-						'202110WE',
-                    ]
-                    for (var i = 0; i < layers.length; i++) {
-                        var layer = layers[i]
-                        if (clicked === layer) {
-                            map.setLayoutProperty(layer, 'visibility', 'visible')
-                            var inactiveLayers = layers.filter(el => el !== layer)
-                            for (var i = 0; i < inactiveLayers.length; i++) {
-                                inactiveLayer = inactiveLayers[i]
-                                map.setLayoutProperty(inactiveLayer, 'visibility', 'none')
-                            }
-                        } else {
-                            map.setLayoutProperty(layer, 'visibility', 'none')
+            function setBubble(slider, thumb) {
+                const val = slider.value
+                const min = slider.min ? slider.min : 0
+                const max = slider.max ? slider.max : 85 // '85' based on CSS
+                const newVal = Number(((val - min) * 85) / (max - min)) // '85' based on CSS
+                const ampm = val >= 12 ? 'PM' : 'AM'
+                const hour12 = val % 12 ? val % 12 : 12
+                thumb.innerHTML = hour12 + '&nbsp;' + ampm
+                thumb.style.left = `calc(${newVal}% + 23px + (${23 - newVal * 0.50}px))` // equation values based on CSS
+            }
+
+            /*
+            Loads map based on selected date
+            IMPORTANT: Add new dataset names into "layers" array
+            */
+
+            document.getElementById('dates').addEventListener('change', function (e) {
+                var cat = document.querySelector('input[name="cat"]:checked').value
+                var day = document.querySelector('input[name="day"]:checked').value
+                var clicked = cat + day
+                var layers = [
+                    '201910WD',
+                    '201910WE',
+                    'soeWD',
+                    'soeWE',
+                    '202067WD',
+                    '202067WE',
+                    '202010WD',
+                    '202010WE',
+                    '202110WD',
+                    '202110WE',
+                    '202210WD',
+                    '202210WE',
+                ]
+                for (var i = 0; i < layers.length; i++) {
+                    var layer = layers[i]
+                    if (clicked === layer) {
+                        map.setLayoutProperty(layer, 'visibility', 'visible')
+                        var inactiveLayers = layers.filter(el => el !== layer)
+                        for (var i = 0; i < inactiveLayers.length; i++) {
+                            inactiveLayer = inactiveLayers[i]
+                            map.setLayoutProperty(inactiveLayer, 'visibility', 'none')
                         }
+                    } else {
+                        map.setLayoutProperty(layer, 'visibility', 'none')
                     }
-                })
-                
-                document.getElementById('202110').click();
-                document.getElementById('WD').click();
-                
+                }
+            })
 
-            })    
+            document.getElementById('202210').click();
+            document.getElementById('WD').click();
 
-        </script>
-    </body>
+
+        })
+
+    </script>
+</body>
+
 </html>
