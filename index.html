@@ -828,6 +828,13 @@
                 <table>
                     <tr>
                         <label class="datecat">
+                            2024/10/1 - 10/31
+                            <input id="202410" value="202410" name="cat" type="radio">
+                            <span class="checkmark"></span>
+                        </label>
+                    </tr>
+                    <tr>
+                        <label class="datecat">
                             2023/10/1 - 10/31
                             <input id="202310" value="202310" name="cat" type="radio">
                             <span class="checkmark"></span>
@@ -999,6 +1006,8 @@
                 ['202210WE', 'mapbox://nyamato.61ysybzi', '202210WE-ag5ic9'],
                 ['202310WD', 'mapbox://nyamato.3k9x5ixf', '202310WD-7gcrh1'],
                 ['202310WE', 'mapbox://nyamato.8099tji2', '202310WE-dddds4'],
+                ['202410WD', 'mapbox://nyamato.6cbq5c7m', '202410WD-8vivo0'],
+                ['202410WE', 'mapbox://nyamato.deyvl66j', '202410WE-3xvyd9'],
             ]
 
             function addsourcelayer(data) {
@@ -1094,6 +1103,8 @@
                     '202210WE',
                     '202310WD',
                     '202310WE',
+                    '202410WD',
+                    '202410WE',
                 ]
                 for (var i = 0; i < layers.length; i++) {
                     var layer = layers[i]
@@ -1110,7 +1121,7 @@
                 }
             })
 
-            document.getElementById('202310').click();
+            document.getElementById('202410').click();
             document.getElementById('WD').click();
 
 
